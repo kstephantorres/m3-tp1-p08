@@ -17,7 +17,8 @@ const Formulario = () => {
         });
       };
     
-      const handleSubmit = () => {
+      const handleSubmit = (e) => {
+        e.preventDefault()
         if (Object.values(formData).every((value) => value.trim() !== '')) {
           alert('Datos enviados ✅');
           setFormData({
@@ -32,7 +33,7 @@ const Formulario = () => {
       };
 
     return (
-        <Form className="mt-3">
+        <Form onSubmit={handleSubmit} className="mt-3">
             <FormGroup>
                 <Form.Label>Nombre:</Form.Label>
                 <Form.Control
@@ -40,6 +41,9 @@ const Formulario = () => {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleInputChange}
+                required
+                minLength={2}
+                maxLength={40}
                 />
             </FormGroup>
             <Form.Group controlId="formApellido">
@@ -49,16 +53,22 @@ const Formulario = () => {
                 name="apellido"
                 value={formData.apellido}
                 onChange={handleInputChange}
+                required
+                minLength={2}
+                maxLength={50}
                 />
             </Form.Group>
 
             <Form.Group controlId="formDNI">
                 <Form.Label>DNI:</Form.Label>
                 <Form.Control
-                type="text"
+                type="number"
                 name="dni"
                 value={formData.dni}
                 onChange={handleInputChange}
+                required
+                min={10000000}
+                max={99999999}
                 />
             </Form.Group>
 
@@ -69,9 +79,10 @@ const Formulario = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                required
                 />
             </Form.Group>
-            <Button variant="primary" type="button" onClick={handleSubmit} className="my-3">
+            <Button variant="primary" type="submit" className="my-3">
                 Enviar
             </Button>
         </Form>
